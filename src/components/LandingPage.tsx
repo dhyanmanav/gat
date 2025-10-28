@@ -11,7 +11,7 @@ export function LandingPage({ onSelectStudent, onSelectAdmin, backgroundImage }:
     <div 
       className="min-h-screen flex items-center justify-center p-4 relative"
       style={{
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: 'url("sddefault.jpg")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
