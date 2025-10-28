@@ -1,7 +1,7 @@
 
   # Certificate Request Platform
 
-  This is a code bundle for Certificate Request Platform. The original project is available at 
+  This is a code bundle for Certificate Request Platform. The original project is available at https://gat-cms-2.netlify.app/
 
   ## Running the code
 
