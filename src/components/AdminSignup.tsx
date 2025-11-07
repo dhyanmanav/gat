@@ -11,6 +11,9 @@ interface AdminSignupProps {
 }
 
 export function AdminSignup({ onBack, onSignupSuccess, onSwitchToLogin, backgroundImage }: AdminSignupProps) {
+  // Security code variable (keep this as the single source of truth)
+  const ADMIN_SECURITY_CODE = '1234';
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -22,6 +25,9 @@ export function AdminSignup({ onBack, onSignupSuccess, onSwitchToLogin, backgrou
   const [error, setError] = useState('');
   const [showOTPModal, setShowOTPModal] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
+
+  // New state to hold the admin security code input (textarea)
+  const [adminSecurityInput, setAdminSecurityInput] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -65,6 +71,12 @@ export function AdminSignup({ onBack, onSignupSuccess, onSwitchToLogin, backgrou
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // New: check admin security code first
+    if (adminSecurityInput !== ADMIN_SECURITY_CODE) {
+      setError('Invalid admin security code');
+      return;
+    }
+
     if (!otpVerified) {
       setError('Please verify your mobile number first');
       return;
@@ -196,6 +208,18 @@ export function AdminSignup({ onBack, onSignupSuccess, onSwitchToLogin, backgrou
                   </div>
                 )}
               </div>
+            </div>
+
+            {/* NEW: Admin security code textarea */}
+            <div>
+              <label className="block text-gray-700 mb-2">Admin Security Code</label>
+              <textarea
+                value={adminSecurityInput}
+                onChange={(e) => setAdminSecurityInput(e.target.value)}
+                placeholder="Enter admin security code"
+                className="w-full pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none h-16 pl-3"
+              />
+              <p className="text-xs text-gray-500 mt-1">Enter the secret admin code to allow signup.</p>
             </div>
 
             <div>
